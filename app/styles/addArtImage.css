@@ -1,0 +1,35 @@
+.proposedImageThumbnailList {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: 700px;
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+.proposedImageThumbnail {
+  height: 100px;
+  width: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  box-sizing: border-box;
+}
+
+.proposedImageThumbnail img {
+  height: 90px;
+  width: auto;
+  box-sizing: border-box;
+  margin: 2px;
+}
+.proposedImageThumbnail:hover img {
+  outline: 4px solid pink;
+}
+
+.proposedImageThumbnail.active img,
+.proposedImageThumbnail:active img {
+  outline: 4px solid red;
+}

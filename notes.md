@@ -6,7 +6,11 @@
 
 [x] - Main Simple Layout
 
-[ ] - Screenshots - try bing api so it's somewhat automated
+[x] - art image - try bing api so it's somewhat automated
+
+[ ] - art image - After json bulk import, automatically set a screenshot by searching
+
+[ ] - Basic CRUD Delete, Edit, Update
 
 [ ] - Importer using openai
 
@@ -17,6 +21,9 @@
 [x] - Database Choice
 
 [ ] - Backend Layout
+
+[ ] - use node 18... not sure why I'm on 16
+
 
 [ ] - Auth for Admin
 
@@ -36,6 +43,8 @@
 
 [ ] - Sentiment analysis
 
+[ ] - Image storage instead of url links?
+
 ### More experimental
 
 [ ] - BYO Art (p2p)
@@ -43,6 +52,7 @@
 ## Remix love/hate
 
 Some thoughts on Remix as I work through it.
+V2 Project -> https://github.com/orgs/remix-run/projects/14
 
 ### love
 

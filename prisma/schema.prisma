@@ -11,17 +11,18 @@ datasource db {
 }
 
 model Art {
-  id               String        @id @default(uuid())
-  createdAt        DateTime      @default(now())
-  updatedAt        DateTime      @updatedAt
-  title            String
-  creator          String // probably a relation but for now
-  description      String
-  creationDate     DateTime
-  imageUrl         String
-  imageAltText     String
-  homeCompetitions Competition[] @relation("homeCompetitions")
-  awayCompetitions Competition[] @relation("awayCompetitions")
+  id                String        @id @default(uuid())
+  createdAt         DateTime      @default(now())
+  updatedAt         DateTime      @updatedAt
+  title             String
+  creator           String // probably a relation but for now
+  description       String
+  creationDate      DateTime
+  imageThumbnailUrl String        @default("")
+  imageUrl          String
+  imageAltText      String
+  homeCompetitions  Competition[] @relation("homeCompetitions")
+  awayCompetitions  Competition[] @relation("awayCompetitions")
 }
 
 model Competition {

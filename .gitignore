@@ -17,4 +17,5 @@ experimental/**/*.db
 .vscode/
 .nuxt
 dev.db
+dev.db-journal
 *.env*
