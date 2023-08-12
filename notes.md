@@ -1,35 +1,52 @@
-# backlog
+# Backlog
 
-TODO:
+## TODO
 
 [ ] - Main Battle
+
 [x] - Main Simple Layout
+
 [ ] - Screenshots - try bing api so it's somewhat automated
+
 [ ] - Importer using openai
+
 [x] - Importer from json (fed from manual open ai to seed?)
+
 [ ] - Importer - Figure out how to automate finding of images
 
 [x] - Database Choice
+
 [ ] - Backend Layout
+
 [ ] - Auth for Admin
+
 [ ] - Cache Random/new user
+
 [ ] - slugs for arts
+
 [ ] - some styles
 
 [ ] - Decide if user auth is even needed. If we can prevent otherwise against bots maybe.. (the remix "stacks" have some bots handling)
 
 [ ] - Stats for art
+
 [ ] - basic elo for art
+
 [ ] - Stats for users
+
 [ ] - Sentiment analysis
 
-More experimental
-[ ] - BYO Art (p2p experiment)
+### More experimental
+
+[ ] - BYO Art (p2p)
 
 ## Remix love/hate
 
+Some thoughts on Remix as I work through it.
+
 ### love
 
+- In general, it's much more enjoyable to write than 'vanilla' React.
 - nice readable error messages with common sense solutions - missing file.. asks to make it external to bundle perhaps...
 - kind of like the css scoping instead of css modules...
 - very rapid development
