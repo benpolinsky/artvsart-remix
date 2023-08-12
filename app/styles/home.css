@@ -1,0 +1,8 @@
+.arena {
+  display: flex;
+  flex-direction: row;
+}
+
+.artCombatant {
+  flex: 1;
+}

@@ -1,0 +1,14 @@
+form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+textarea {
+  min-height: 100px;
+  width: calc(100% - 10px);
+}
+
+textarea#json-dump {
+  height: 400px;
+}

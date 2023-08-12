@@ -1,0 +1,17 @@
+.layout-container {
+  display: flex;
+}
+
+.sidebar {
+  flex: 1;
+}
+
+main {
+  flex: 2;
+}
+
+nav#main {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
