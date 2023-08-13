@@ -2,7 +2,7 @@ import { redirect, type ActionArgs } from "@remix-run/node";
 import { useActionData } from "@remix-run/react";
 import React, { useRef } from "react";
 import { db } from "~/storage/db.server";
-import { ErrorBag } from "~/utils/errors";
+import { ErrorBag, type ErrorBagResponse } from "~/utils/errors";
 import stylesUrl from "~/styles/forms.css";
 import { addStyleSheets } from "~/utils/helpers";
 
@@ -22,17 +22,16 @@ export const action = async ({ request }: ActionArgs) => {
 
   try {
     const jsonInput = JSON.parse(jsonDump);
-    // no createMany for sqlite so we'll iterate slowly for now
+
+    // eh don't like this...
     const promises = jsonInput.length
       ? jsonInput.map((d: any) => db.art.create({ data: d }))
       : [db.art.create({ data: jsonInput })];
 
     await Promise.all(promises);
   } catch (error) {
-    // dealing with error types is always
-    console.log(error);
-    errorBag.add("global", (error as Error)?.message ?? (error as string));
-    return errorBag.response();
+    errorBag.add("global", error as string | Error);
+    return { ...errorBag.response(), status: 400 };
   }
 
   return redirect("/arts");
@@ -40,7 +39,7 @@ export const action = async ({ request }: ActionArgs) => {
 
 export default function ArtsAddBulk() {
   const validateTextareaElementRef = useRef<HTMLTextAreaElement>(null);
-  const actionData = useActionData<typeof action>();
+  const actionData = useActionData<ErrorBagResponse | undefined>();
 
   const validateJson = (e: React.MouseEvent<HTMLButtonElement>) => {
     console.log(validateTextareaElementRef.current?.value);
@@ -48,44 +47,40 @@ export default function ArtsAddBulk() {
   };
 
   return (
-    <>
-      <h1>Add Bulk Arts via JSON</h1>
+    <form id="add-bulk" method="post">
+      <div>
+        <label>
+          <p>JSON Array of Art</p>
+          <TextArea
+            name="json-dump"
+            id="json-dump"
+            ref={validateTextareaElementRef}
+            errors={actionData?.errors}
+          />
+        </label>
+      </div>
 
-      <form id="add-bulk" method="post">
-        <div>
-          <label>
-            <p>Art Dump:</p>
-            <TextArea
-              name="json-dump"
-              id="json-dump"
-              ref={validateTextareaElementRef}
-              errors={actionData?.errors}
-            />
-          </label>
-        </div>
+      <div>
+        <button
+          type="submit"
+          className="button"
+          onClick={(e) => validateJson(e)}
+        >
+          Validate
+        </button>
 
-        <div>
-          <button
-            type="submit"
-            className="button"
-            onClick={(e) => validateJson(e)}
-          >
-            Validate
-          </button>
-
-          <button type="submit" className="button">
-            Add
-          </button>
-        </div>
-      </form>
-    </>
+        <button type="submit" className="button">
+          Add
+        </button>
+      </div>
+    </form>
   );
 }
 
 type TextAreaProps = React.DetailedHTMLProps<
   React.TextareaHTMLAttributes<HTMLTextAreaElement>,
   HTMLTextAreaElement
-> & { errors: Record<string, string> };
+> & { errors?: Record<string, string> };
 
 const TextArea = React.forwardRef<HTMLTextAreaElement, TextAreaProps>(
   (props, ref) => {

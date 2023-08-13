@@ -11,40 +11,6 @@ body {
 .home-wrapper {
   flex-grow: 1;
 }
-
-header {
-  width: 100%;
-  display: flex;
-  height: 50px;
-  border-bottom: 1px solid black;
-}
-
-nav {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  flex-grow: 1;
-}
-
-nav a {
-  margin-right: 20px;
-  color: black;
-  text-decoration: none;
-}
-
-nav a:hover,
-nav a.active {
-  color: green;
-}
-
-nav a:first-of-type {
-  margin-left: 10px;
-}
-
-nav a:last-of-type {
-  margin-left: auto;
-}
-
 /* footer */
 
 footer {

@@ -1,26 +1,16 @@
-import type { LinksFunction } from "@remix-run/node";
-import { NavLink, Outlet } from "@remix-run/react";
-import stylesUrl from "~/styles/index.css";
+import { Outlet } from "@remix-run/react";
+import { DashboardHeader } from "~/layout/dashboard/DashboardHeader";
+import { addStyleSheets } from "~/utils/helpers";
+import dashboardStyles from "~/styles/dashboard.css";
+import headerNavStyles from "~/styles/headerNav.css";
 
-export const links: LinksFunction = () => [
-  { rel: "stylesheet", href: stylesUrl },
-];
+export const links = addStyleSheets([dashboardStyles, headerNavStyles]);
 
-export default function MainRoute() {
+export default function Dashboard() {
   return (
     <>
       <DashboardHeader />
       <Outlet />
     </>
-  );
-}
-
-function DashboardHeader() {
-  return (
-    <header>
-      <nav>
-        <NavLink to="/dashboard/arts">Arts</NavLink>
-      </nav>
-    </header>
   );
 }

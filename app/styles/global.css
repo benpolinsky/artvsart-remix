@@ -11,3 +11,9 @@ html {
 :-moz-focusring {
   outline: auto;
 }
+
+ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}

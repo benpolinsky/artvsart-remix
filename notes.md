@@ -4,6 +4,8 @@
 
 [ ] - Main Battle
 
+[ ] - Names (battle, competition (combatant v art is okay... different roles))
+
 [x] - Main Simple Layout
 
 [x] - art image - try bing api so it's somewhat automated
@@ -17,13 +19,17 @@
 [x] - Importer from json (fed from manual open ai to seed?)
 
 [ ] - Importer - Figure out how to automate finding of images
+    - This now seems straightforward, we'll include the medium, creator and such to try to get the best image.
+    - Initially we can do the job with Promise.All, but workers would be cool.
+    - Need to add copyright information and probably disclaimed in the about page.
 
 [x] - Database Choice
 
-[ ] - Backend Layout
+[x] - Backend Layout 
 
 [ ] - use node 18... not sure why I'm on 16
 
+[ ] - deploy somewhere
 
 [ ] - Auth for Admin
 

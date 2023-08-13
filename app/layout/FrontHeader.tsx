@@ -2,7 +2,7 @@ import { NavLink } from "@remix-run/react";
 
 export function FrontHeader() {
   return (
-    <header>
+    <header id="main">
       <nav>
         <NavLink to="/">Art vs Art</NavLink>
         <NavLink to="/battle">Battle</NavLink>

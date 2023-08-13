@@ -1,6 +1,6 @@
 import type { ActionArgs, LoaderArgs } from "@remix-run/node";
 import { json, redirect } from "@remix-run/node";
-import { useActionData, useLoaderData } from "@remix-run/react";
+import { useLoaderData } from "@remix-run/react";
 import { useState } from "react";
 import { AzureImageSearch } from "~/services/AzureImageSearch";
 import { findArt, updateArt } from "~/storage/dbOperations.server";
@@ -8,13 +8,10 @@ import { addStyleSheets } from "~/utils/helpers";
 import addArtImageStyles from "~/styles/addArtImage.css";
 import { mockImageRepsonse } from "~/services/mockImageResponse";
 
-const useMockResponses = true; // so I don't blow up my bing api search credits
+const useMockResponses = false; // so I don't blow up my bing api search credits
 
 export const links = addStyleSheets(addArtImageStyles);
 
-// Here's an example of using the same action for two different purposes,
-// distinguished by a form field. I think I'd like more separation
-// (this was mentioned somewhere in the remix docs... )
 export const action = async ({ request, params }: ActionArgs) => {
   if (!params.artId) return new Error("No artId provided"); // lookup rec. way of handling this
 
@@ -23,7 +20,6 @@ export const action = async ({ request, params }: ActionArgs) => {
   const imageAltText = formData.get("imageUrl")?.toString();
   const imageThumbnailUrl = formData.get("imageThumbnailUrl")?.toString();
 
-  // if an image is selected, update the art record in db
   if (imageUrl && imageAltText && imageThumbnailUrl) {
     await updateArt(params.artId, {
       imageUrl,
@@ -33,41 +29,34 @@ export const action = async ({ request, params }: ActionArgs) => {
 
     return redirect(`/dashboard/arts/${params.artId}`);
   }
-
-  // if image is not selected, search bing for some recs.
-  if (useMockResponses) return mockImageRepsonse;
-
-  const art = await findArt(params.artId, ["title"]);
-  const searchClient = new AzureImageSearch();
-  const proposedImages = await searchClient.query(art.title);
-
-  if (!proposedImages?.value) throw new Error("No search responses");
-
-  return proposedImages.value;
 };
 
 export const loader = async ({ params: { artId } }: LoaderArgs) => {
   if (!artId) return new Error("No artId provided"); // lookup rec. way of handling this
 
   const art = await findArt(artId, ["title"]);
+  let proposedImages;
 
-  return json({ art });
+  if (useMockResponses) {
+    proposedImages = mockImageRepsonse;
+  } else {
+    const searchClient = new AzureImageSearch();
+    proposedImages = (await searchClient.query(art.title))?.value;
+  }
+
+  return json({ art, proposedImages });
 };
 
 export default function AddArtImage() {
-  const data = useLoaderData();
-  const proposedImages = useActionData<any[]>();
+  const { art, proposedImages } = useLoaderData();
 
   const [activeThumbnail, setActiveThumbnail] = useState<any>(null);
 
   return (
     <div>
-      <h1>Add art image for: {data.art.title}</h1>
+      <h1>Add art image for: {art.title}</h1>
       <form method="post">
-        <input
-          value={activeThumbnail ? "Add Image" : "Find Suggestions"}
-          type="submit"
-        />
+        <input disabled={!activeThumbnail} value={"Add Image"} type="submit" />
         {activeThumbnail && (
           <>
             <input
@@ -80,7 +69,7 @@ export default function AddArtImage() {
               hidden
               readOnly
               name="imageAltText"
-              value={getAltText(activeThumbnail, `${data.art.title} image`)}
+              value={getAltText(activeThumbnail, `${art.title} image`)}
             />
             <input
               hidden
@@ -97,7 +86,7 @@ export default function AddArtImage() {
       {proposedImages?.length && (
         <div>
           <ul className="proposedImageThumbnailList">
-            {proposedImages.map((image) => (
+            {proposedImages.map((image: BingImageResponse) => (
               <li
                 key={image.imageId}
                 className={`proposedImageThumbnail ${
@@ -106,7 +95,7 @@ export default function AddArtImage() {
               >
                 <img
                   src={image.thumbnailUrl}
-                  alt={getAltText(image, `${data.art.title} image`)}
+                  alt={getAltText(image, `${art.title} image`)}
                   onClick={() => setActiveThumbnail(image)}
                 />
               </li>
@@ -120,4 +109,10 @@ export default function AddArtImage() {
 
 function getAltText(image: { name: string }, fallback: string) {
   return image.name ?? fallback;
+}
+
+interface BingImageResponse {
+  imageId: string;
+  thumbnailUrl: string;
+  name: string;
 }

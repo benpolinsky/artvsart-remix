@@ -1,15 +1,36 @@
+import type { ActionArgs } from "@remix-run/node";
+import { json, redirect } from "@remix-run/node";
+import { Form, useActionData, useLoaderData } from "@remix-run/react";
+import {
+  prepCompetition,
+  type ArtCombatant,
+  setCompetitionWinner,
+} from "~/arena/Competition";
+import { ErrorBag } from "~/utils/errors";
 import { addStyleSheets } from "~/utils/helpers";
 import homeStyles from "~/styles/home.css";
-import type { ActionArgs } from "@remix-run/node";
-import { json } from "@remix-run/node";
-import { useActionData, useFetcher, useLoaderData } from "@remix-run/react";
-import { prepCompetition, type ArtCombatant } from "~/arena/Competition";
 
 export const links = addStyleSheets(homeStyles);
 
 export const action = async ({ request }: ActionArgs) => {
-  console.log((await request.formData()).get("artId"));
-  return null;
+  const formData = await request.formData();
+  const winnerId = formData.get("artId")?.toString();
+  const competitionId = formData.get("competitionId")?.toString();
+
+  const errorBag = new ErrorBag();
+  if (!competitionId) {
+    errorBag.add("competitionId", "Does not exist");
+    return { ...errorBag.response(), status: 400 };
+  }
+
+  if (!winnerId) {
+    errorBag.add("winnerId", "No winner!");
+    return { ...errorBag.response(), status: 400 };
+  }
+
+  await setCompetitionWinner(competitionId, winnerId);
+
+  return redirect(`/result/${competitionId}`);
 };
 
 export const loader = async () => json(await prepCompetition());
@@ -27,18 +48,17 @@ export default function Home() {
 }
 
 export function Competition() {
-  const fetcher = useFetcher(); // use for more app-like experience, but we could redirect to the competition result
-
   const data = useLoaderData<typeof loader>();
-  const actionData = useActionData();
+  const actionData = useActionData<{ winnerId: string }>();
   assertArtForCompetition(data.arts);
 
   return (
     <main className="arena">
       {data.arts.map((art: ArtCombatant) => (
-        <fetcher.Form method="post" action="/?index" key={art.id}>
+        <Form method="post" action="/?index" key={art.id}>
           <div className="artCombatant">
             <h1>{art.title}</h1>
+            {actionData?.winnerId ? "WINNER!!" : ""}
             <input
               hidden
               readOnly
@@ -48,7 +68,7 @@ export function Competition() {
             <input hidden readOnly name="artId" value={art.id} />
             <input type="submit" value="Vote" />
           </div>
-        </fetcher.Form>
+        </Form>
       ))}
     </main>
   );

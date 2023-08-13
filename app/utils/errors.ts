@@ -1,12 +1,21 @@
+export interface ErrorBagResponse {
+  errors: Record<string, string>;
+}
+
 export class ErrorBag {
-  #errors: Record<string, string> = {};
-  add(label: string, message: string) {
-    this.#errors[label] = message;
+  #errors: Map<string, string> = new Map();
+
+  add(label: string, error: Error | string) {
+    this.#errors.set(label, typeof error === "string" ? error : error.message);
   }
 
-  response() {
+  response(): ErrorBagResponse {
     return {
-      errors: this.#errors,
+      errors: Object.fromEntries(this.#errors),
     };
+  }
+
+  hasErrors() {
+    return !!this.#errors.size;
   }
 }

@@ -3,11 +3,16 @@ import type { LinksFunction } from "@remix-run/node";
 import { FrontFooter } from "~/layout/FrontFooter";
 import { FrontHeader } from "~/layout/FrontHeader";
 import layoutStyles from "~/styles/layout.css";
+import headerNavStyles from "~/styles/headerNav.css";
 
 export const links: LinksFunction = () => [
   {
     rel: "stylesheet",
     href: layoutStyles,
+  },
+  {
+    rel: "stylesheet",
+    href: headerNavStyles,
   },
   {
     rel: "preconnect",

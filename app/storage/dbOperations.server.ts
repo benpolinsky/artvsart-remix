@@ -11,15 +11,6 @@ export const pickRandomArt = async (count: number) => {
   return arts;
 };
 
-export const createCompetition = async (arts: ArtCombatant[]) => {
-  return db.competition.create({
-    data: {
-      awayArtId: arts[AWAY_TEAM_INDEX].id,
-      homeArtId: arts[HOME_TEAM_INDEX].id,
-    },
-  });
-};
-
 export const findArt = async (
   artId: string,
   selectFields: ArtScalarFields[] = []
@@ -46,5 +37,48 @@ export const updateArt = async (id: string, data: any) => {
       id,
     },
     data,
+  });
+};
+
+export const createCompetition = async (arts: ArtCombatant[]) => {
+  return db.competition.create({
+    data: {
+      awayArtId: arts[AWAY_TEAM_INDEX].id,
+      homeArtId: arts[HOME_TEAM_INDEX].id,
+    },
+  });
+};
+
+export const findCompetition = async (
+  competitionId: string,
+  withArts: boolean = true
+) => {
+  const findOptions = {
+    where: { id: competitionId },
+    include: { awayArt: false, homeArt: false, winner: false },
+  };
+
+  if (withArts) {
+    findOptions.include.awayArt = true;
+    findOptions.include.homeArt = true;
+    findOptions.include.winner = true;
+  }
+
+  const competition = await db.competition.findFirst(findOptions);
+
+  if (!competition) throw new Error(); // again figure out how best to deal with this
+  return competition;
+};
+
+export const updateCompetition = async (
+  competitionId: string,
+  winnerId: string
+) => {
+  return db.competition.update({
+    where: {
+      id: competitionId,
+    },
+    data: { winnerId },
+    include: { homeArt: true, awayArt: true, winner: true },
   });
 };

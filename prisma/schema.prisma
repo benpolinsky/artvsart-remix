@@ -11,18 +11,19 @@ datasource db {
 }
 
 model Art {
-  id                String        @id @default(uuid())
-  createdAt         DateTime      @default(now())
-  updatedAt         DateTime      @updatedAt
-  title             String
-  creator           String // probably a relation but for now
-  description       String
-  creationDate      DateTime
-  imageThumbnailUrl String        @default("")
-  imageUrl          String
-  imageAltText      String
-  homeCompetitions  Competition[] @relation("homeCompetitions")
-  awayCompetitions  Competition[] @relation("awayCompetitions")
+  id                  String        @id @default(uuid())
+  createdAt           DateTime      @default(now())
+  updatedAt           DateTime      @updatedAt
+  title               String
+  creator             String // probably a relation but for now
+  description         String
+  creationDate        DateTime
+  imageThumbnailUrl   String        @default("") // this was a hack while understanding prisma migrations, should go away
+  imageUrl            String
+  imageAltText        String
+  homeCompetitions    Competition[] @relation("homeCompetitions")
+  awayCompetitions    Competition[] @relation("awayCompetitions")
+  winningCompetitions Competition[] @relation("winningCompetitions")
 }
 
 model Competition {
@@ -31,6 +32,8 @@ model Competition {
   updatedAt DateTime @updatedAt
   homeArt   Art      @relation("homeCompetitions", fields: [homeArtId], references: [id])
   awayArt   Art      @relation("awayCompetitions", fields: [awayArtId], references: [id])
+  winner    Art?     @relation("winningCompetitions", fields: [winnerId], references: [id])
   homeArtId String
   awayArtId String
+  winnerId  String?
 }
