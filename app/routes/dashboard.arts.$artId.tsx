@@ -1,25 +1,11 @@
 import type { LoaderArgs } from "@remix-run/node";
 import { json } from "@remix-run/node";
 import { Link, Outlet, useLoaderData } from "@remix-run/react";
-import { db } from "~/storage/db.server";
+import { findArtWithAllFields } from "~/storage/dbOperations.server";
 
 export const loader = async ({ params }: LoaderArgs) =>
   json({
-    art: await db.art.findUnique({
-      where: {
-        id: params.artId,
-      },
-      select: {
-        id: true,
-        title: true,
-        creator: true,
-        creationDate: true,
-        imageUrl: true,
-        imageAltText: true,
-        description: true,
-        imageThumbnailUrl: true,
-      },
-    }),
+    art: await findArtWithAllFields(params.artId),
   });
 
 export default function ShowArt() {

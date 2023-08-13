@@ -27,8 +27,34 @@ export const findArt = async (
     select: { id: true, ...selectObj },
   });
 
-  if (!art) throw new Error(); // again figure out how best to deal with this
+  if (!art) throw new Error(`Couldn't find art with id ${artId}`);
   return art;
+};
+
+export const findArtWithAllFields = async (artId?: string) => {
+  if (!artId) throw new Error("Please provide an art id");
+
+  const art = await db.art.findFirst({
+    where: { id: artId },
+  });
+
+  if (!art) throw new Error(`Couldn't find art with id ${artId}`);
+  return art;
+};
+
+export const getAllArt = async (selectFields: ArtScalarFields[] = []) => {
+  const selectObj: { [K in ArtScalarFields]?: boolean } = {};
+
+  selectFields.forEach((field) => {
+    selectObj[field] = true;
+  });
+
+  const arts = await db.art.findMany({
+    select: { id: true, ...selectObj },
+  });
+
+  if (!arts) throw new Error("Couldn't retrieve any art from the database");
+  return arts;
 };
 
 export const saveArt = async (data: any) => {
@@ -72,6 +98,23 @@ export const findCompetition = async (
   const competition = await db.competition.findFirst(findOptions);
 
   if (!competition) throw new Error(); // again figure out how best to deal with this
+  return competition;
+};
+
+export const findCompetitions = async (withArts: boolean = true) => {
+  const findOptions = {
+    include: { awayArt: false, homeArt: false, winner: false },
+  };
+
+  if (withArts) {
+    findOptions.include.awayArt = true;
+    findOptions.include.homeArt = true;
+    findOptions.include.winner = true;
+  }
+
+  const competition = await db.competition.findMany(findOptions);
+
+  if (!competition) throw new Error("Couldn't find any competitions");
   return competition;
 };
 

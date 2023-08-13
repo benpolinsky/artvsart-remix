@@ -1,14 +1,12 @@
 import type { ActionArgs } from "@remix-run/node";
 import { json, redirect } from "@remix-run/node";
 import { Form, useActionData, useLoaderData } from "@remix-run/react";
-import {
-  prepCompetition,
-  type ArtCombatant,
-  setCompetitionWinner,
-} from "~/arena/Competition";
+import { Competition, type ArtCombatant } from "~/arena/Competition";
 import { ErrorBag } from "~/utils/errors";
 import { addStyleSheets } from "~/utils/helpers";
 import homeStyles from "~/styles/home.css";
+
+const competition = new Competition();
 
 export const links = addStyleSheets(homeStyles);
 
@@ -28,12 +26,12 @@ export const action = async ({ request }: ActionArgs) => {
     return { ...errorBag.response(), status: 400 };
   }
 
-  await setCompetitionWinner(competitionId, winnerId);
+  await competition.setWinner(winnerId);
 
   return redirect(`/result/${competitionId}`);
 };
 
-export const loader = async () => json(await prepCompetition());
+export const loader = async () => json(await competition.prepare());
 
 export default function Home() {
   return (
@@ -41,13 +39,13 @@ export default function Home() {
       <h1>home</h1>
       <div>About this machine</div>
       <main>
-        <Competition />
+        <MainCompetition />
       </main>
     </>
   );
 }
 
-export function Competition() {
+export function MainCompetition() {
   const data = useLoaderData<typeof loader>();
   const actionData = useActionData<{ winnerId: string }>();
   assertArtForCompetition(data.arts);

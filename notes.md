@@ -13,9 +13,15 @@
 
 [x] - art image - try bing api so it's somewhat automated
 
-[x] - art image - After json bulk import, automatically set a screenshot by searching
+[x] - art image - After json bulk import, automatically set a image by searching
+
+[x] - throttle image search by a half second or something to avoid hitting free account limits (3 tps)
 
 [ ] - Basic CRUD Delete, Edit, Update
+
+[ ] - Get some high level playwright tests
+
+[ ] - Unit test non-components for now.
 
 [ ] - Importer using openai
     - have to add verified boolean field to art 
@@ -31,7 +37,7 @@
 
 [x] - Database Choice
 
-[x] - Backend Layout 
+[x] - Backend Layout
 
 [ ] - deploy somewhere
 
@@ -43,7 +49,7 @@
 
 [ ] - some styles
 
-[ ] - Decide if user auth is even needed. If we can prevent otherwise against bots maybe.. (the remix "stacks" have some bots handling)
+[ ] - Decide if user auth is even needed. If we can prevent otherwise against bots maybe..
 
 [ ] - Stats for art
 

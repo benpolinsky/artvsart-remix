@@ -1,6 +1,7 @@
 lockfileVersion: 5.4
 
 specifiers:
+  '@playwright/test': ^1.37.0
   '@prisma/client': ^5.1.1
   '@remix-run/css-bundle': ^1.19.2
   '@remix-run/dev': ^1.19.2
@@ -33,6 +34,7 @@ dependencies:
   react-dom: 18.2.0_react@18.2.0
 
 devDependencies:
+  '@playwright/test': 1.37.0
   '@remix-run/dev': 1.19.2_xfen4dgiwstwt7ksztdnkf27pm
   '@remix-run/eslint-config': 1.19.2_ndmxqlp7ktdhup7efhqzuso5hi
   '@types/node': 18.17.5
@@ -1912,6 +1914,17 @@ packages:
       open: 9.1.0
       picocolors: 1.0.0
       tslib: 2.6.1
+    dev: true
+
+  /@playwright/test/1.37.0:
+    resolution: {integrity: sha512-181WBLk4SRUyH1Q96VZl7BP6HcK0b7lbdeKisn3N/vnjitk+9HbdlFz/L5fey05vxaAhldIDnzo8KUoy8S3mmQ==}
+    engines: {node: '>=16'}
+    hasBin: true
+    dependencies:
+      '@types/node': 20.4.8
+      playwright-core: 1.37.0
+    optionalDependencies:
+      fsevents: 2.3.2
     dev: true
 
   /@prisma/client/5.1.1_prisma@5.1.1:
@@ -6354,6 +6367,12 @@ packages:
       jsonc-parser: 3.2.0
       mlly: 1.4.0
       pathe: 1.1.1
+    dev: true
+
+  /playwright-core/1.37.0:
+    resolution: {integrity: sha512-1c46jhTH/myQw6sesrcuHVtLoSNfJv8Pfy9t3rs6subY7kARv0HRw5PpyfPYPpPtQvBOmgbE6K+qgYUpj81LAA==}
+    engines: {node: '>=16'}
+    hasBin: true
     dev: true
 
   /postcss-discard-duplicates/5.1.0_postcss@8.4.27:

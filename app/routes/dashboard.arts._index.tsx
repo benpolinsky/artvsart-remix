@@ -1,10 +1,10 @@
 import { json } from "@remix-run/node";
 import { NavLink, useLoaderData } from "@remix-run/react";
-import { db } from "~/storage/db.server";
+import { getAllArt } from "~/storage/dbOperations.server";
 
 export const loader = async () =>
   json({
-    arts: await db.art.findMany({ select: { id: true, title: true } }),
+    arts: await getAllArt(["title"]),
   });
 
 export default function ArtsIndex() {

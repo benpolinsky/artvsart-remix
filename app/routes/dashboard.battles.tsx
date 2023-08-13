@@ -1,12 +1,10 @@
 import { json } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
-import { db } from "~/storage/db.server";
+import { findCompetitions } from "~/storage/dbOperations.server";
 
 export const loader = async () => {
   return json({
-    competitions: await db.competition.findMany({
-      include: { awayArt: true, homeArt: true },
-    }),
+    competitions: await findCompetitions(true),
   });
 };
 
