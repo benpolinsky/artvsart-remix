@@ -5,6 +5,7 @@ import type { ArtCombatant } from "~/arena/Competition";
 type ArtScalarFields = "title" | "creator" | "description"; // etc
 
 export const pickRandomArt = async (count: number) => {
+  // random support through prism for sqlite is not there yet
   const arts = await db.$queryRaw<
     ArtCombatant[]
   >`SELECT id, title, creator, description FROM Art ORDER BY RANDOM() LIMIT ${count}`;
@@ -28,6 +29,10 @@ export const findArt = async (
 
   if (!art) throw new Error(); // again figure out how best to deal with this
   return art;
+};
+
+export const saveArt = async (data: any) => {
+  return await db.art.create({ data });
 };
 
 // work on the data types, ditch the scalar union, instead can grab Art object keys

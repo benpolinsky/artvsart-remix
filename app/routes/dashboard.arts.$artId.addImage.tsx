@@ -7,6 +7,7 @@ import { findArt, updateArt } from "~/storage/dbOperations.server";
 import { addStyleSheets } from "~/utils/helpers";
 import addArtImageStyles from "~/styles/addArtImage.css";
 import { mockImageRepsonse } from "~/services/mockImageResponse";
+import type { BingImageResponse } from "~/artshop/art";
 
 const useMockResponses = false; // so I don't blow up my bing api search credits
 
@@ -109,10 +110,4 @@ export default function AddArtImage() {
 
 function getAltText(image: { name: string }, fallback: string) {
   return image.name ?? fallback;
-}
-
-interface BingImageResponse {
-  imageId: string;
-  thumbnailUrl: string;
-  name: string;
 }

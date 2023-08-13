@@ -1,7 +1,7 @@
 import { redirect, type ActionArgs } from "@remix-run/node";
 import { useActionData } from "@remix-run/react";
 import React, { useRef } from "react";
-import { db } from "~/storage/db.server";
+import { createArt } from "~/artshop/art";
 import { ErrorBag, type ErrorBagResponse } from "~/utils/errors";
 import stylesUrl from "~/styles/forms.css";
 import { addStyleSheets } from "~/utils/helpers";
@@ -9,10 +9,11 @@ import { addStyleSheets } from "~/utils/helpers";
 export const links = addStyleSheets(stylesUrl);
 
 // yep just smashing the controller into the view
-// !!Add validation/sanitization where necessary!!
+// !! Add validation/sanitization where necessary !!
 export const action = async ({ request }: ActionArgs) => {
   const formData = await request.formData();
   const jsonDump = formData.get("json-dump")?.toString();
+  const autoImage = Boolean(formData.get("auto-image")?.toString());
   const errorBag = new ErrorBag();
 
   if (!jsonDump) {
@@ -23,24 +24,22 @@ export const action = async ({ request }: ActionArgs) => {
   try {
     const jsonInput = JSON.parse(jsonDump);
 
-    // eh don't like this...
-    const promises = jsonInput.length
-      ? jsonInput.map((d: any) => db.art.create({ data: d }))
-      : [db.art.create({ data: jsonInput })];
+    const createPromises = jsonInput.map((data: any) =>
+      createArt(data, autoImage)
+    );
 
-    await Promise.all(promises);
+    await Promise.allSettled(createPromises);
   } catch (error) {
     errorBag.add("global", error as string | Error);
     return { ...errorBag.response(), status: 400 };
   }
 
-  return redirect("/arts");
+  return redirect("/dashboard/arts");
 };
 
 export default function ArtsAddBulk() {
   const validateTextareaElementRef = useRef<HTMLTextAreaElement>(null);
   const actionData = useActionData<ErrorBagResponse | undefined>();
-
   const validateJson = (e: React.MouseEvent<HTMLButtonElement>) => {
     console.log(validateTextareaElementRef.current?.value);
     e.preventDefault();
@@ -58,14 +57,14 @@ export default function ArtsAddBulk() {
             errors={actionData?.errors}
           />
         </label>
+        <label>
+          Add image(s) automatically
+          <input type="checkbox" name="auto-image" id="auto-image" />
+        </label>
       </div>
 
       <div>
-        <button
-          type="submit"
-          className="button"
-          onClick={(e) => validateJson(e)}
-        >
+        <button type="submit" className="button" onClick={validateJson}>
           Validate
         </button>
 

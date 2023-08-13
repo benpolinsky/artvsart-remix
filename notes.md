@@ -3,31 +3,35 @@
 ## TODO
 
 [ ] - Main Battle
+    [x] - initial implementation
 
 [ ] - Names (battle, competition (combatant v art is okay... different roles))
+
+[ ] - types for db art
 
 [x] - Main Simple Layout
 
 [x] - art image - try bing api so it's somewhat automated
 
-[ ] - art image - After json bulk import, automatically set a screenshot by searching
+[x] - art image - After json bulk import, automatically set a screenshot by searching
 
 [ ] - Basic CRUD Delete, Edit, Update
 
 [ ] - Importer using openai
+    - have to add verified boolean field to art 
 
 [x] - Importer from json (fed from manual open ai to seed?)
 
 [ ] - Importer - Figure out how to automate finding of images
     - This now seems straightforward, we'll include the medium, creator and such to try to get the best image.
     - Initially we can do the job with Promise.All, but workers would be cool.
-    - Need to add copyright information and probably disclaimed in the about page.
+    - Need to add copyright information and probably disclaimer in the about page.
+
+[ ] - AJV JSON Validation
 
 [x] - Database Choice
 
 [x] - Backend Layout 
-
-[ ] - use node 18... not sure why I'm on 16
 
 [ ] - deploy somewhere
 
