@@ -2,8 +2,9 @@
 
 ## TODO
 
-[ ] - Main Battle
+[x] - Main Battle
     [x] - initial implementation
+    [x] - home battle but also on battle route
 
 [ ] - Names (battle, competition (combatant v art is okay... different roles))
 
@@ -42,6 +43,8 @@
 [ ] - deploy somewhere
 
 [ ] - Auth for Admin
+
+[ ] - Figure out useFetcher for battle...
 
 [ ] - Cache Random/new user
 
@@ -85,6 +88,7 @@ V2 Project -> https://github.com/orgs/remix-run/projects/14
 - the hand waving away of csrf tokens!
 [https://github.com/remix-run/remix/discussions/2906](GH Discussion)
 - the 'stacks' are too much.
+- wondering now about component styles. If styles are attached to routes, when extracting components, they won't carry their styles. I could see this be an advantage or disadvantage, but right now don't like it. 
 
 ## design ideas
 

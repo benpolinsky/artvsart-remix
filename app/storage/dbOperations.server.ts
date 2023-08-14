@@ -1,14 +1,14 @@
 import { AWAY_TEAM_INDEX, HOME_TEAM_INDEX } from "~/utils/constants";
 import { db } from "./db.server";
-import type { ArtCombatant } from "~/arena/Competition";
+import type { IArtCombatant } from "~/arena/ArtCombatant";
 
 type ArtScalarFields = "title" | "creator" | "description"; // etc
 
 export const pickRandomArt = async (count: number) => {
   // random support through prism for sqlite is not there yet
   const arts = await db.$queryRaw<
-    ArtCombatant[]
-  >`SELECT id, title, creator, description FROM Art ORDER BY RANDOM() LIMIT ${count}`;
+    IArtCombatant[]
+  >`SELECT id, title, creator, description, imageUrl, imageAltText FROM Art ORDER BY RANDOM() LIMIT ${count}`;
   return arts;
 };
 
@@ -71,7 +71,7 @@ export const updateArt = async (id: string, data: any) => {
   });
 };
 
-export const createCompetition = async (arts: ArtCombatant[]) => {
+export const createCompetition = async (arts: IArtCombatant[]) => {
   return db.competition.create({
     data: {
       awayArtId: arts[AWAY_TEAM_INDEX].id,
@@ -97,7 +97,7 @@ export const findCompetition = async (
 
   const competition = await db.competition.findFirst(findOptions);
 
-  if (!competition) throw new Error(); // again figure out how best to deal with this
+  if (!competition) throw new Error("No competition found");
   return competition;
 };
 
@@ -127,6 +127,5 @@ export const updateCompetition = async (
       id: competitionId,
     },
     data: { winnerId },
-    include: { homeArt: true, awayArt: true, winner: true },
   });
 };

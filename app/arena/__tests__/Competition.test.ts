@@ -119,7 +119,7 @@ describe("Competition", () => {
       awayArt: expectedArts[1],
     });
 
-    const competitionAfterWin = await competition.setWinner("guid-33-guid");
+    await competition.setWinner("guid-33-guid");
 
     expect(db.competition.update).toHaveBeenCalledWith({
       where: {
@@ -127,12 +127,5 @@ describe("Competition", () => {
       },
       data: { winnerId: "guid-33-guid" },
     });
-
-    expect(competitionAfterWin.winnerId).toEqual("guid-33-guid");
-    expect(competitionAfterWin.winner?.title).toEqual("Title 3");
-    expect(competitionAfterWin.winner?.creator).toEqual("Mock Creator 3");
-    expect(competitionAfterWin.winner?.description).toEqual(
-      "Some art we all love. 3"
-    );
   });
 });

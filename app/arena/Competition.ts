@@ -5,18 +5,15 @@ import {
   updateCompetition,
 } from "~/storage/dbOperations.server";
 
-export interface ArtCombatant {
-  id: string;
-  title: string;
-  creator: string;
-  description: string;
-}
+// Move back to functions, the class doesn't really help.
 
 export class Competition {
   #numberOfCombatants = 2;
   #id: string | null = null;
   #artIds: [string, string] | [] = [];
 
+  // readies a competition by choosing two random art
+  // and attaching them to a new competition
   async prepare() {
     const arts = await pickRandomArt(this.#numberOfCombatants);
     const competition = await createCompetition(arts);
@@ -30,10 +27,18 @@ export class Competition {
     };
   }
 
+  // loads a previously prepared competition
+  async load(competitionId: string) {
+    const competition = await findCompetition(competitionId);
+
+    this.#id = competitionId;
+    this.#artIds = [competition.homeArtId, competition.awayArtId];
+  }
+
   async setWinner(winnerId: string) {
     if (!this.#id)
       throw new Error(
-        "Competition has not been prepared. Call `await competition.prepare()` first"
+        "Competition has not been prepared. Call `competition.prepare or competition.load` first"
       );
 
     if (!this.#artIds.length || !this.#artIds.includes(winnerId))

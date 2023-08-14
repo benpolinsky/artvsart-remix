@@ -10,6 +10,7 @@ header nav {
   flex-direction: row;
   align-items: center;
   flex-grow: 1;
+  height: 50px;
 }
 
 header nav a {
@@ -33,4 +34,5 @@ header#main nav a:last-of-type {
 
 nav#secondary {
   margin-top: 10px;
+  height: auto;
 }

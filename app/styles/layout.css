@@ -2,14 +2,11 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  height: 100vh;
-  padding: 0;
-  margin: 0;
-  font-family: "Nunito Sans", sans-serif;
 }
 
 .home-wrapper {
   flex-grow: 1;
+  margin: 0 10px;
 }
 /* footer */
 
@@ -20,8 +17,4 @@ footer {
   display: flex;
   align-items: center;
   justify-content: center;
-}
-
-.home-wrapper {
-  margin: 0 10px;
 }

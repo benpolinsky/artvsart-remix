@@ -1,28 +1,18 @@
 import { Outlet } from "@remix-run/react";
-import type { LinksFunction } from "@remix-run/node";
 import { FrontFooter } from "~/layout/FrontFooter";
 import { FrontHeader } from "~/layout/FrontHeader";
 import layoutStyles from "~/styles/layout.css";
 import headerNavStyles from "~/styles/headerNav.css";
+import homeStyles from "~/styles/home.css";
+import artStyles from "~/styles/art.css";
+import { addStyleSheets } from "~/utils/helpers";
 
-export const links: LinksFunction = () => [
-  {
-    rel: "stylesheet",
-    href: layoutStyles,
-  },
-  {
-    rel: "stylesheet",
-    href: headerNavStyles,
-  },
-  {
-    rel: "preconnect",
-    href: "https:fonts/gstatic.com",
-  },
-  {
-    rel: "stylesheet",
-    href: "https://fonts.googleapis.com/css2?family=Nunito Sans&display=swap",
-  },
-];
+export const links = addStyleSheets([
+  layoutStyles,
+  headerNavStyles,
+  homeStyles,
+  artStyles,
+]);
 
 export default function FrontLayout() {
   return (
