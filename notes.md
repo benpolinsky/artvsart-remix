@@ -8,8 +8,7 @@
 
 [ ] - slugs for arts
 
-[ ] - deploy somewhere
-    - look into recommended way to deploy prisma/migrations etc.
+[x] - deploy to fly.io
 
 [ ] - Basic stats (Most people agreed with you etc)
 
@@ -19,11 +18,12 @@
 
 [ ] - Production analytics
 
-[ ] - Production uptime monitoring
+[ ] - Production uptime monitoring (seems like fly has some support)
+    - Might want to ping every so often to prevent it from sleeping
 
 [ ] - Names (battle, competition (combatant v art is okay... different roles))
 
-[ ] - types for db art
+[ ] - types for db art, I've been relying on prisma, but we need to establish our own boundaries
 
 [x] - Main Simple Layout
 
@@ -35,7 +35,9 @@
 
 [x] - Root error boundary
 
-[ ] - Decide if user auth is even needed. If we can prevent otherwise against bots maybe..
+[ ] - add bulk arts rejection (or even success) report
+
+[ ] - Decide if user auth is even needed. If we can prevent otherwise against bots maybe not.
 
 [ ] - Basic CRUD Delete, Edit, Update
 
@@ -60,9 +62,6 @@
 [x] - Database Choice
 
 [x] - Backend Layout
-
-
-
 
 [x] - Auth for Admin
 
@@ -115,6 +114,7 @@ V2 Project -> https://github.com/orgs/remix-run/projects/14
 - the 'stacks' are too much.
 - wondering now about component styles. If styles are attached to routes, when extracting components, they won't carry their styles. I could see this be an advantage or disadvantage, but right now don't like it.
 - filesystem based routes are quickly getting out of control. The inability to throw them into folders is absurd.
+- deployment instructions should be in the docs. Having to use a template's Readme to see the documentation (or follow Kent's tutorial) is again inexcusable. Also need to dig through comments/gh issues to figure everything out. I understand it's a complex and customizable process, but that's only the more reason for some good documentation.
 
 ## design ideas
 

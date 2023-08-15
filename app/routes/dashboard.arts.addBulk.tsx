@@ -28,7 +28,13 @@ export const action = async ({ request }: ActionArgs) => {
       createArt(data, autoImage)
     );
 
-    await Promise.allSettled(createPromises);
+    const allSettled = await Promise.allSettled(createPromises);
+    if (allSettled.some((p) => p.status === "rejected")) {
+      // I think we should redirect to a report... maybe either way...
+      throw new Error(
+        "At least one of your imports were rejected - working on more details, sir"
+      );
+    }
   } catch (error) {
     errorBag.add("global", error as string | Error);
     return errorBag.response();

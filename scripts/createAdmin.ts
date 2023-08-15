@@ -1,26 +1,47 @@
 import { PrismaClient } from "@prisma/client";
 import { ok } from "assert";
 import { hashSync } from "bcrypt";
+import { config } from "dotenv";
 
-// create administrator
-const email = process.argv[2];
-const password = process.argv[3];
+config();
 
-ok(email, "Email is not present");
-ok(password, "Password is not present");
-
+const email = process.env.ADMIN_USERNAME;
+const password = process.env.ADMIN_PASSWORD;
 const db = new PrismaClient();
-db.$connect();
 
-const hashedPassword = hashSync(password, 5);
+async function adminExists() {
+  ok(email, "Email is not present");
+  const user = await db.administrator.findFirst({ where: { email } });
+  return !!user;
+}
 
-db.administrator
-  .create({
-    data: {
-      email,
-      hashedPassword,
-    },
-  })
-  .then((res) => {
-    console.log("Administrator Created");
-  });
+async function createAdmin(email: string, password: string) {
+  const hashedPassword = hashSync(password, 5);
+  await db.administrator
+    .create({
+      data: {
+        email,
+        hashedPassword,
+      },
+    })
+    .then(() => {
+      console.log("Administrator Created");
+    });
+}
+
+async function run() {
+  ok(email, "Email is not present");
+  ok(password, "Password is not present");
+
+  db.$connect();
+
+  const alreadyExists = await adminExists();
+  if (alreadyExists) {
+    console.log("Admin present, good to go.");
+    return;
+  }
+
+  await createAdmin(email, password);
+}
+
+run().then(() => console.log("Done"));
