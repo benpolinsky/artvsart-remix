@@ -37,3 +37,9 @@ model Competition {
   awayArtId String
   winnerId  String?
 }
+
+model Administrator {
+  id             String @id @default(uuid())
+  email          String @unique
+  hashedPassword String
+}

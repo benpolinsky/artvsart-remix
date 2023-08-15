@@ -18,7 +18,7 @@ export const action = async ({ request }: ActionArgs) => {
 
   if (!jsonDump) {
     errorBag.add("json-dump", "No JSON Provided");
-    return { ...errorBag.response(), status: 400 };
+    return errorBag.response();
   }
 
   try {
@@ -31,7 +31,7 @@ export const action = async ({ request }: ActionArgs) => {
     await Promise.allSettled(createPromises);
   } catch (error) {
     errorBag.add("global", error as string | Error);
-    return { ...errorBag.response(), status: 400 };
+    return errorBag.response();
   }
 
   return redirect("/dashboard/arts");

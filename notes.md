@@ -6,6 +6,21 @@
     [x] - initial implementation
     [x] - home battle but also on battle route
 
+[ ] - slugs for arts
+
+[ ] - deploy somewhere
+    - look into recommended way to deploy prisma/migrations etc.
+
+[ ] - Basic stats (Most people agreed with you etc)
+
+[ ] - GH Actions / lock down main once ready
+
+[ ] - Production logging
+
+[ ] - Production analytics
+
+[ ] - Production uptime monitoring
+
 [ ] - Names (battle, competition (combatant v art is okay... different roles))
 
 [ ] - types for db art
@@ -18,11 +33,17 @@
 
 [x] - throttle image search by a half second or something to avoid hitting free account limits (3 tps)
 
+[x] - Root error boundary
+
+[ ] - Decide if user auth is even needed. If we can prevent otherwise against bots maybe..
+
 [ ] - Basic CRUD Delete, Edit, Update
+
+[ ] - Either prepare competition in memory or run a clean up script for unvoted competitions...
 
 [ ] - Get some high level playwright tests
 
-[ ] - Unit test non-components for now.
+[ ] - Unit test non-components for now <- still a bit early..
 
 [ ] - Importer using openai
     - have to add verified boolean field to art 
@@ -40,19 +61,18 @@
 
 [x] - Backend Layout
 
-[ ] - deploy somewhere
 
-[ ] - Auth for Admin
+
+
+[x] - Auth for Admin
+
+[ ] - Form auth package documentation could be improved - they only show findCreate and no find with compare - it's unclear that salt is included etc, though they want to stay crypto-algo agnostic.
 
 [ ] - Figure out useFetcher for battle...
 
 [ ] - Cache Random/new user
 
-[ ] - slugs for arts
-
 [ ] - some styles
-
-[ ] - Decide if user auth is even needed. If we can prevent otherwise against bots maybe..
 
 [ ] - Stats for art
 
@@ -63,6 +83,11 @@
 [ ] - Sentiment analysis
 
 [ ] - Image storage instead of url links?
+
+[ ] - more error boundaries
+        - in progress but ran into issue: https://github.com/remix-run/remix/discussions/6086
+
+
 
 ### More experimental
 
@@ -88,7 +113,8 @@ V2 Project -> https://github.com/orgs/remix-run/projects/14
 - the hand waving away of csrf tokens!
 [https://github.com/remix-run/remix/discussions/2906](GH Discussion)
 - the 'stacks' are too much.
-- wondering now about component styles. If styles are attached to routes, when extracting components, they won't carry their styles. I could see this be an advantage or disadvantage, but right now don't like it. 
+- wondering now about component styles. If styles are attached to routes, when extracting components, they won't carry their styles. I could see this be an advantage or disadvantage, but right now don't like it.
+- filesystem based routes are quickly getting out of control. The inability to throw them into folders is absurd.
 
 ## design ideas
 

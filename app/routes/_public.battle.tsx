@@ -16,7 +16,7 @@ export const action = async ({ request }: ActionArgs) => {
   const errorBag = new ErrorBag();
   if (!competitionId) {
     errorBag.add("competitionId", "Does not exist");
-    return { ...errorBag.response(), status: 400 };
+    return errorBag.response();
   }
 
   const competition = new Competition();
@@ -24,7 +24,7 @@ export const action = async ({ request }: ActionArgs) => {
 
   if (!winnerId) {
     errorBag.add("winnerId", "No winner!");
-    return { ...errorBag.response(), status: 400 };
+    return errorBag.response();
   }
 
   await competition.setWinner(winnerId);

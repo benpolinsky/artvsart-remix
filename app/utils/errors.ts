@@ -1,5 +1,6 @@
 export interface ErrorBagResponse {
   errors: Record<string, string>;
+  status: number;
 }
 
 export class ErrorBag {
@@ -9,9 +10,10 @@ export class ErrorBag {
     this.#errors.set(label, typeof error === "string" ? error : error.message);
   }
 
-  response(): ErrorBagResponse {
+  response(status: number = 400): ErrorBagResponse {
     return {
       errors: Object.fromEntries(this.#errors),
+      status,
     };
   }
 
