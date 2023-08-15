@@ -6,13 +6,23 @@
     [x] - initial implementation
     [x] - home battle but also on battle route
 
-[ ] - slugs for arts
+[ ] - About Page
 
-[x] - deploy to fly.io
+[ ] - Info panel (description)
+
+[ ] - front styles
 
 [ ] - Basic stats (Most people agreed with you etc)
 
-[ ] - GH Actions / lock down main once ready
+[x] - deploy to fly.io
+
+[ ] - Get some high level playwright tests
+
+[ ] - slugs for arts
+
+[ ] - GH Actions Deploy rather than local/ lock down main once ready
+
+[ ] - AJV JSON Validation
 
 [ ] - Production logging
 
@@ -43,8 +53,6 @@
 
 [ ] - Either prepare competition in memory or run a clean up script for unvoted competitions...
 
-[ ] - Get some high level playwright tests
-
 [ ] - Unit test non-components for now <- still a bit early..
 
 [ ] - Importer using openai
@@ -56,8 +64,6 @@
     - This now seems straightforward, we'll include the medium, creator and such to try to get the best image.
     - Initially we can do the job with Promise.All, but workers would be cool.
     - Need to add copyright information and probably disclaimer in the about page.
-
-[ ] - AJV JSON Validation
 
 [x] - Database Choice
 
@@ -71,10 +77,6 @@
 
 [ ] - Cache Random/new user
 
-[ ] - some styles
-
-[ ] - Stats for art
-
 [ ] - basic elo for art
 
 [ ] - Stats for users
@@ -82,6 +84,9 @@
 [ ] - Sentiment analysis
 
 [ ] - Image storage instead of url links?
+    - if sticking with links 
+        - you absolutely need to credit 
+        - add checker that ensures we can access it (cors)
 
 [ ] - more error boundaries
         - in progress but ran into issue: https://github.com/remix-run/remix/discussions/6086
