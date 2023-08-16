@@ -16,11 +16,8 @@ export default function Home() {
   const [arts, competitionId] = assertDataForCompetition(data);
   return (
     <>
-      <h1>home</h1>
-      <div>About this machine</div>
-      <main>
-        <MainCompetition arts={arts} competitionId={competitionId} />
-      </main>
+      <h1 className="mainTitle">ART vs ART</h1>
+      <MainCompetition arts={arts} competitionId={competitionId} />
     </>
   );
 }

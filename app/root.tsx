@@ -14,7 +14,7 @@ export const links: LinksFunction = () => [
   { rel: "stylesheet", href: stylesUrl },
   {
     rel: "preconnect",
-    href: "https:fonts/gstatic.com",
+    href: "https://fonts.gstatic.com",
   },
   {
     rel: "stylesheet",

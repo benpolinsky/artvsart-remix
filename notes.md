@@ -2,19 +2,19 @@
 
 ## TODO
 
-[x] - Main Battle
-    [x] - initial implementation
-    [x] - home battle but also on battle route
+[ ] - Mobile styles/testing
 
-[ ] - About Page
+[ ] - Reproduce possible Remix v2 issues (odd styles behavior, back button causes page to throw? - could be my implementation of course)
 
-[ ] - Info panel (description)
-
-[ ] - front styles
+[ ] - Add more info to art and overlay panel (creation data, medium, genre/category, maybe longer description)
 
 [ ] - Basic stats (Most people agreed with you etc)
 
-[x] - deploy to fly.io
+[ ] - Set up some lint rules - your casing is all over the place for css :)
+
+[ ] - Way for users to add art
+
+[ ] - suspense or preloading for image loading
 
 [ ] - Get some high level playwright tests
 
@@ -24,9 +24,9 @@
 
 [ ] - AJV JSON Validation
 
-[ ] - Production logging
+[ ] - Probably postgres for production over sqlite now that deployed.
 
-[ ] - Production analytics
+[ ] - Production analytics - fly provides basic but could look at ga.
 
 [ ] - Production uptime monitoring (seems like fly has some support)
     - Might want to ping every so often to prevent it from sleeping
@@ -34,16 +34,6 @@
 [ ] - Names (battle, competition (combatant v art is okay... different roles))
 
 [ ] - types for db art, I've been relying on prisma, but we need to establish our own boundaries
-
-[x] - Main Simple Layout
-
-[x] - art image - try bing api so it's somewhat automated
-
-[x] - art image - After json bulk import, automatically set a image by searching
-
-[x] - throttle image search by a half second or something to avoid hitting free account limits (3 tps)
-
-[x] - Root error boundary
 
 [ ] - add bulk arts rejection (or even success) report
 
@@ -56,20 +46,12 @@
 [ ] - Unit test non-components for now <- still a bit early..
 
 [ ] - Importer using openai
-    - have to add verified boolean field to art 
-
-[x] - Importer from json (fed from manual open ai to seed?)
+    - have to add verified boolean field to art
 
 [ ] - Importer - Figure out how to automate finding of images
     - This now seems straightforward, we'll include the medium, creator and such to try to get the best image.
     - Initially we can do the job with Promise.All, but workers would be cool.
     - Need to add copyright information and probably disclaimer in the about page.
-
-[x] - Database Choice
-
-[x] - Backend Layout
-
-[x] - Auth for Admin
 
 [ ] - Form auth package documentation could be improved - they only show findCreate and no find with compare - it's unclear that salt is included etc, though they want to stay crypto-algo agnostic.
 
@@ -91,7 +73,37 @@
 [ ] - more error boundaries
         - in progress but ran into issue: https://github.com/remix-run/remix/discussions/6086
 
+[x] - Production logging - fly provides basic logging
 
+[x] - Main Battle
+    [x] - initial implementation
+    [x] - home battle but also on battle route
+
+[x] - About Page
+
+[x] - Info panel (description)
+
+[x] - tolerable front styles
+
+[x] - deploy to fly.io
+
+[x] - Main Simple Layout
+
+[x] - art image - try bing api so it's somewhat automated
+
+[x] - art image - After json bulk import, automatically set a image by searching
+
+[x] - throttle image search by a half second or something to avoid hitting free account limits (3 tps)
+
+[x] - Root error boundary
+
+[x] - Importer from json (fed from manual open ai to seed?)
+
+[x] - Database Choice
+
+[x] - Backend Layout
+
+[x] - Auth for Admin
 
 ### More experimental
 

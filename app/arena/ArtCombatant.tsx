@@ -15,7 +15,11 @@ export function ArtCombatant({ art }: ArtCombatantProps) {
   return (
     <div className="artCombatant">
       <h1>{art.title}</h1>
-      <img src={art.imageUrl} alt={art.imageAltText} />
+      <h2>{art.creator}</h2>
+      <span className="artImageContainer">
+        <img src={art.imageUrl} alt={art.imageAltText} />
+        <div className="artDescription">{art.description}</div>
+      </span>
     </div>
   );
 }

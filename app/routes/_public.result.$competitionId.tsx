@@ -5,8 +5,9 @@ import { ArtCombatant } from "~/arena/ArtCombatant";
 import { findCompetition } from "~/storage/dbOperations.server";
 import { addStyleSheets } from "~/utils/helpers";
 import artStyles from "~/styles/art.css";
+import competitionResult from "~/styles/competitionResult.css";
 
-export const links = addStyleSheets(artStyles);
+export const links = addStyleSheets([artStyles, competitionResult]);
 
 export const loader = async ({ params }: LoaderArgs) =>
   json(await findCompetition(params.competitionId!)); // handle error case
@@ -16,9 +17,12 @@ export default function CompetitionResult() {
   if (!data.winner) return null; // again error handling
 
   return (
-    <div>
-      The winner is: <ArtCombatant art={data.winner} />
-      <Link to={"/battle"}>Try another match</Link>
+    <div className="competitionResult">
+      <p className="resultTitle">The winner is:</p>
+      <ArtCombatant art={data.winner} />
+      <Link className="voteButton" to={"/battle"}>
+        Next battle!
+      </Link>
     </div>
   );
 }

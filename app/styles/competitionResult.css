@@ -1,0 +1,16 @@
+.competitionResult {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: auto;
+  margin-bottom: 20px;
+}
+
+.resultTitle {
+  font-size: 26px;
+}
+
+.competitionResult .artCombatant {
+  flex-grow: initial;
+}

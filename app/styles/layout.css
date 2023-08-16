@@ -5,10 +5,8 @@ body {
 }
 
 .home-wrapper {
-  flex-grow: 1;
   margin: 0 10px;
 }
-/* footer */
 
 footer {
   height: 200px;
@@ -17,4 +15,8 @@ footer {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+footer a {
+  color: #fff;
 }

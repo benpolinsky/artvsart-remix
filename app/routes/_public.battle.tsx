@@ -38,11 +38,5 @@ export default function Battle() {
   const data = useLoaderData<typeof loader>();
   const [arts, competitionId] = assertDataForCompetition(data);
 
-  return (
-    <>
-      <main>
-        <MainCompetition arts={arts} competitionId={competitionId} />
-      </main>
-    </>
-  );
+  return <MainCompetition arts={arts} competitionId={competitionId} />;
 }
