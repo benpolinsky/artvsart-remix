@@ -23,3 +23,25 @@ export function ArtCombatant({ art }: ArtCombatantProps) {
     </div>
   );
 }
+
+export function assertArtCombatants(arts: IArtCombatant[]) {
+  arts.forEach(assertArtCombatant);
+}
+
+export function assertArtCombatant(
+  art: IArtCombatant
+): asserts art is IArtCombatant {
+  if (!art) throw new Error("Art is null");
+  const isValid = artCombatantRequiredFields.every((f) => art?.[f]);
+  if (!isValid) {
+    throw new Error("Art is not fully formed");
+  }
+}
+
+const artCombatantRequiredFields = [
+  "id",
+  "title",
+  "creator",
+  "imageUrl",
+  "imageAltText",
+] as const;

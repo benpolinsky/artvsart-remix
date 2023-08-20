@@ -1,5 +1,9 @@
 import { Form } from "@remix-run/react";
-import { ArtCombatant, type IArtCombatant } from "./ArtCombatant";
+import {
+  ArtCombatant,
+  assertArtCombatants,
+  type IArtCombatant,
+} from "./ArtCombatant";
 import { useState } from "react";
 
 interface MainCompetitionProps {
@@ -22,31 +26,6 @@ export function MainCompetition({ arts, competitionId }: MainCompetitionProps) {
   );
 }
 
-const artCombatantRequiredFields = [
-  "id",
-  "title",
-  "creator",
-  "imageUrl",
-  "imageAltText",
-] as const;
-
-export function assertDataForCompetition(data: {
-  arts?: IArtCombatant[];
-  competitionId?: string;
-}): [[IArtCombatant, IArtCombatant], string] {
-  if (!data.competitionId) throw new Error("No competition id provided");
-  if (data.arts?.length !== 2) throw new Error("Does not include 2 arts");
-
-  data.arts.forEach((art) => {
-    const isValid = artCombatantRequiredFields.every((f) => art?.[f]);
-    if (!isValid) {
-      throw new Error("Art is not fully formed");
-    }
-  });
-
-  return [data.arts as [IArtCombatant, IArtCombatant], data.competitionId];
-}
-
 export function ArtContainer({ art, competitionId }: ArtContainerProps) {
   const [active, setActive] = useState(false);
   return (
@@ -63,4 +42,16 @@ export function ArtContainer({ art, competitionId }: ArtContainerProps) {
       </Form>
     </div>
   );
+}
+
+export function assertDataForCompetition(data: {
+  arts: IArtCombatant[];
+  competitionId: string;
+}): asserts data is {
+  arts: [IArtCombatant, IArtCombatant];
+  competitionId: string;
+} {
+  if (!data.competitionId) throw new Error("No competition id provided");
+  if (data.arts?.length !== 2) throw new Error("Does not include 2 arts");
+  assertArtCombatants(data.arts);
 }

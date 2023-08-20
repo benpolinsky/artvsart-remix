@@ -1,12 +1,7 @@
+import type { BingImageResponse } from "~/services/AzureImageSearch";
 import { AzureImageSearch } from "~/services/AzureImageSearch";
+import type { ArtDatabaseProperties } from "~/storage/db.types";
 import { saveArt } from "~/storage/dbOperations.server";
-
-export interface BingImageResponse {
-  imageId: string;
-  contentUrl: string;
-  thumbnailUrl: string;
-  name: string;
-}
 
 interface ArtSearch {
   title: string;
@@ -16,7 +11,7 @@ interface ArtSearch {
 
 async function findImageForArt(
   art: ArtSearch
-): Promise<BingImageResponse | null> {
+): Promise<BingImageResponse | undefined> {
   console.log("Finding image - start");
 
   const searchClient = new AzureImageSearch();
@@ -28,18 +23,26 @@ async function findImageForArt(
   return proposedImages?.[0];
 }
 
-export async function createArt(art: any, autoImage: boolean = false) {
+export async function createArt(
+  art: ArtDatabaseProperties,
+  autoImage: boolean = false
+) {
   console.log(`creating art - ${art.title} - start`);
 
   let image;
-  if (autoImage) image = await findImageForArt(art);
+  if (autoImage) {
+    image = await findImageForArt(art);
+  }
 
-  const saveArtPromise = saveArt({
-    ...art,
-    imageUrl: image?.contentUrl,
-    imageThumbnailUrl: image?.thumbnailUrl,
-    imageAltText: image?.name,
-  });
+  if (image)
+    art = {
+      ...art,
+      imageUrl: image.contentUrl,
+      imageThumbnailUrl: image.thumbnailUrl,
+      imageAltText: image.name,
+    };
+
+  const saveArtPromise = saveArt(art);
 
   console.log(`creating art - ${art.title} - done`);
   return saveArtPromise;

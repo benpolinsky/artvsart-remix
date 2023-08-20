@@ -2,6 +2,14 @@
 
 ## TODO
 
+[ ] - better styles
+
+[ ] - ts asserts
+
+[ ] - types for db art, I've been relying on prisma, but we need to establish our own boundaries
+
+[ ] - get rid of anys
+
 [ ] - Mobile styles/testing
 
 [ ] - Reproduce possible Remix v2 issues (odd styles behavior, back button causes page to throw? - could be my implementation of course)
@@ -13,6 +21,8 @@
 [ ] - Set up some lint rules - your casing is all over the place for css :)
 
 [ ] - Way for users to add art
+
+
 
 [ ] - suspense or preloading for image loading
 
@@ -29,11 +39,10 @@
 [ ] - Production analytics - fly provides basic but could look at ga.
 
 [ ] - Production uptime monitoring (seems like fly has some support)
-    - Might want to ping every so often to prevent it from sleeping
+    
+[x] - Might want to ping every so often to prevent it from sleeping 
 
 [ ] - Names (battle, competition (combatant v art is okay... different roles))
-
-[ ] - types for db art, I've been relying on prisma, but we need to establish our own boundaries
 
 [ ] - add bulk arts rejection (or even success) report
 

@@ -1,6 +1,7 @@
 import { AWAY_TEAM_INDEX, HOME_TEAM_INDEX } from "~/utils/constants";
 import { db } from "./db.server";
 import type { IArtCombatant } from "~/arena/ArtCombatant";
+import type { ArtDatabaseProperties } from "./db.types";
 
 type ArtScalarFields = "title" | "creator" | "description"; // etc
 
@@ -57,12 +58,15 @@ export const getAllArt = async (selectFields: ArtScalarFields[] = []) => {
   return arts;
 };
 
-export const saveArt = async (data: any) => {
+export const saveArt = async (data: ArtDatabaseProperties) => {
   return await db.art.create({ data });
 };
 
 // work on the data types, ditch the scalar union, instead can grab Art object keys
-export const updateArt = async (id: string, data: any) => {
+export const updateArt = async (
+  id: string,
+  data: Partial<ArtDatabaseProperties>
+) => {
   await db.art.update({
     where: {
       id,

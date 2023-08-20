@@ -5,6 +5,7 @@ import { createArt } from "~/artshop/art";
 import { ErrorBag, type ErrorBagResponse } from "~/utils/errors";
 import stylesUrl from "~/styles/forms.css";
 import { addStyleSheets } from "~/utils/helpers";
+import type { ArtDatabaseProperties } from "~/storage/db.types";
 
 export const links = addStyleSheets(stylesUrl);
 
@@ -24,7 +25,8 @@ export const action = async ({ request }: ActionArgs) => {
   try {
     const jsonInput = JSON.parse(jsonDump);
 
-    const createPromises = jsonInput.map((data: any) =>
+    // validate this any once we add AJV
+    const createPromises = jsonInput.map((data: ArtDatabaseProperties) =>
       createArt(data, autoImage)
     );
 

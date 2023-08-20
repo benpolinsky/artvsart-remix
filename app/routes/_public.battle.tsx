@@ -36,7 +36,9 @@ export const loader = async () => json(await new Competition().prepare());
 
 export default function Battle() {
   const data = useLoaderData<typeof loader>();
-  const [arts, competitionId] = assertDataForCompetition(data);
+  assertDataForCompetition(data);
 
-  return <MainCompetition arts={arts} competitionId={competitionId} />;
+  return (
+    <MainCompetition arts={data.arts} competitionId={data.competitionId} />
+  );
 }

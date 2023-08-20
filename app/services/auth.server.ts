@@ -4,11 +4,7 @@ import { FormStrategy } from "remix-auth-form";
 import { compare } from "bcrypt";
 import assert from "assert";
 import { db } from "~/storage/db.server";
-
-type Administrator = {
-  email: string;
-  id: string;
-};
+import type { Administrator } from "~/administration/types";
 
 export const adminAuthenticator = new Authenticator<Administrator>(
   sessionStorage
@@ -36,6 +32,6 @@ adminAuthenticator.use(
 
     if (!validated) throw new Error("No access");
 
-    return admin;
+    return { ...admin, hashedPassword: null };
   })
 );

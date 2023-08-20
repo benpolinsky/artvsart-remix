@@ -13,11 +13,11 @@ export const loader = async () => json(await competition.prepare());
 
 export default function Home() {
   const data = useLoaderData<typeof loader>();
-  const [arts, competitionId] = assertDataForCompetition(data);
+  assertDataForCompetition(data);
   return (
     <>
       <h1 className="mainTitle">ART vs ART</h1>
-      <MainCompetition arts={arts} competitionId={competitionId} />
+      <MainCompetition arts={data.arts} competitionId={data.competitionId} />
     </>
   );
 }

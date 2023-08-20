@@ -15,7 +15,9 @@ export class AzureImageSearch {
     this.#throttleMS = throttleMS;
   }
 
-  async query(query: string): Promise<{ value: any[] } | undefined> {
+  async query(
+    query: string
+  ): Promise<{ value: BingImageResponse[] } | undefined> {
     try {
       if (!this.#firstQuery) await wait(this.#throttleMS); // no real reason to wait
 
@@ -36,4 +38,11 @@ export class AzureImageSearch {
       return undefined;
     }
   }
+}
+
+export interface BingImageResponse {
+  imageId: string;
+  contentUrl: string;
+  thumbnailUrl: string;
+  name: string;
 }

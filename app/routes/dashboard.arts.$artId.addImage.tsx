@@ -2,12 +2,14 @@ import type { ActionArgs, LoaderArgs } from "@remix-run/node";
 import { json, redirect } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
 import { useState } from "react";
+import type { BingImageResponse } from "~/services/AzureImageSearch";
 import { AzureImageSearch } from "~/services/AzureImageSearch";
 import { findArt, updateArt } from "~/storage/dbOperations.server";
 import { addStyleSheets } from "~/utils/helpers";
 import addArtImageStyles from "~/styles/addArtImage.css";
 import { mockImageRepsonse } from "~/services/mockImageResponse";
-import type { BingImageResponse } from "~/artshop/art";
+import type { ArtDatabaseProperties } from "~/storage/db.types";
+import { assertArtDatabaseProperties } from "~/storage/db.types";
 
 const useMockResponses = false; // so I don't blow up my bing api search credits
 
@@ -48,10 +50,21 @@ export const loader = async ({ params: { artId } }: LoaderArgs) => {
   return json({ art, proposedImages });
 };
 
-export default function AddArtImage() {
-  const { art, proposedImages } = useLoaderData();
+interface AddArtImageData {
+  art: ArtDatabaseProperties;
+  proposedImages: BingImageResponse[];
+}
 
-  const [activeThumbnail, setActiveThumbnail] = useState<any>(null);
+export default function AddArtImage() {
+  const data = useLoaderData<AddArtImageData>();
+
+  assertData(data);
+  assertArtDatabaseProperties(data.art);
+  const art = data.art;
+  const proposedImages = data.proposedImages;
+
+  const [activeThumbnail, setActiveThumbnail] =
+    useState<BingImageResponse | null>(null);
 
   return (
     <div>
@@ -110,4 +123,10 @@ export default function AddArtImage() {
 
 function getAltText(image: { name: string }, fallback: string) {
   return image.name ?? fallback;
+}
+
+function assertData(data: AddArtImageData): asserts data is AddArtImageData {
+  if (!data) throw new Error("No data");
+  if (!data.art) throw new Error("No art in data");
+  if (!data.proposedImages?.length) throw new Error("No images found");
 }

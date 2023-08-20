@@ -1,6 +1,10 @@
 import type { LoaderArgs } from "@remix-run/node";
 import { json } from "@remix-run/node";
 import { Link, Outlet, useLoaderData } from "@remix-run/react";
+import {
+  assertArtDatabaseProperties,
+  type ArtDatabaseProperties,
+} from "~/storage/db.types";
 import { findArtWithAllFields } from "~/storage/dbOperations.server";
 
 export const loader = async ({ params }: LoaderArgs) =>
@@ -9,8 +13,9 @@ export const loader = async ({ params }: LoaderArgs) =>
   });
 
 export default function ShowArt() {
-  const data = useLoaderData<typeof loader>();
-  if (!data.art) return <p>Error occurred</p>; // get to this with boundaries perhaps
+  const data = useLoaderData<{ data: { art: ArtDatabaseProperties } }>();
+  assertData(data);
+
   return (
     <div>
       <article>
@@ -29,4 +34,9 @@ export default function ShowArt() {
       </div>
     </div>
   );
+}
+
+function assertData(data: any): asserts data is { art: ArtDatabaseProperties } {
+  if (!data) throw new Error("No data");
+  assertArtDatabaseProperties(data.art);
 }
